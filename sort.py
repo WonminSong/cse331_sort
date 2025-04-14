@@ -115,7 +115,7 @@ class SelectionSort:
         return self.A
 
 
-class QuickSort:
+"""class QuickSort:
     def __init__(self, A):
         self.A = A.copy()
 
@@ -129,7 +129,38 @@ class QuickSort:
 
     def sort(self):
         self.A = self.quick_sort(self.A)
+        return self.A"""
+
+class QuickSort:
+    def __init__(self, A):
+        self.A = A.copy()
+
+    def sort(self):
+        stack = [(0, len(self.A) - 1)]
+
+        while stack:
+            low, high = stack.pop()
+
+            if low < high:
+                pivot_index = self.partition(low, high)
+
+                stack.append((low, pivot_index - 1))
+                stack.append((pivot_index + 1, high))
+
         return self.A
+
+    def partition(self, low, high):
+        pivot = self.A[high]
+        i = low - 1
+
+        for j in range(low, high):
+            if self.A[j] <= pivot:
+                i += 1
+                self.A[i], self.A[j] = self.A[j], self.A[i]
+
+        self.A[i + 1], self.A[high] = self.A[high], self.A[i + 1]
+        return i + 1
+
 
 class LibrarySort:
     def __init__(self, A):
@@ -455,7 +486,7 @@ if __name__ == "__main__":
         sys.stdout = f
         for size in range(3):
             data = sorted(random.sample(range(10**(size+3)*2), 10**(size+3)))
-            for i in range(10):
+            for i in range(2):
                 alg = MergeSort(data)
                 start = time.time()
                 alg.sort()
@@ -521,7 +552,7 @@ if __name__ == "__main__":
         sys.stdout = f
         for size in range(3):
             data = sorted(random.sample(range(10**(size+3)*2), 10**(size+3)), reverse=True)
-            for i in range(10):
+            for i in range(2):
                 alg = MergeSort(data)
                 start = time.time()
                 alg.sort()
